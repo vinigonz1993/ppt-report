@@ -62,4 +62,21 @@ def sample():
                 "legend": True
             }
         },
+        4: {
+            "title": {
+                "text": "Line chart with labels and legend",
+                **title_props
+            },
+            "bar_chart": {
+                "title": "Sample Chart",
+                "data": [
+                    ["2022", [10, 20, 30, 35]],
+                    ["2023", [13, 21, 31, 25]]
+                ],
+                "categories": ["Apple", "Google", "Amazon", "Microsoft"],
+                "labels": True,
+                "legend": True,
+                "chart_type": "LINE"
+            }
+        },
     }
