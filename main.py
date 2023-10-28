@@ -53,11 +53,11 @@ class PPTReport:
         '''
 
         if not data:
-            print(f"Categories are missing")
+            print("Categories are missing")
             return
 
         if not categories:
-            print(f"Categories are missing")
+            print("Categories are missing")
             return
 
         chart_data = CategoryChartData()
