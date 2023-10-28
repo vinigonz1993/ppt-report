@@ -40,32 +40,52 @@ class PPTReport:
 
         if "bar_chart" in properties:
             bar_chart = properties["bar_chart"]
-            self.add_bar_chart(
+            self.generate_chart(
                 slide,
                 bar_chart.get("title"),
                 bar_chart.get("data", []),
                 bar_chart.get("categories", []),
                 bar_chart.get("labels", False),
-                bar_chart.get("legend", False)
+                bar_chart.get("legend", False),
+                bar_chart.get("chart_type", "BAR")
             )
 
         return slide
 
-    def add_bar_chart(
+    def validate_chart_properties(self, props):
+        '''Checks for invalid properties'''
+        invalid = False
+        if not props["data"]:
+            print("Categories are missing")
+            invalid = True
+
+        if not props["categories"]:
+            print("Categories are missing")
+            invalid = True
+
+        if invalid:
+            quit()
+
+    def chart_type(self, chart_type):
+        types = {
+            "BAR": XL_CHART_TYPE.COLUMN_CLUSTERED,
+            "LINE": XL_CHART_TYPE.LINE
+        }
+        return types[chart_type]
+
+    def generate_chart(
         self, slide, chart_title="", data=[],
-        categories=[], labels=False, legend=False
+        categories=[], labels=False, legend=False,
+        chart_type="BAR"
     ):
         '''
             Adds a chart to the specific slide
         '''
 
-        if not data:
-            print("Categories are missing")
-            return
-
-        if not categories:
-            print("Categories are missing")
-            return
+        self.validate_chart_properties({
+            "data": data,
+            "categories": categories
+        })
 
         chart_data = CategoryChartData()
         chart_data.title = chart_title
@@ -79,17 +99,18 @@ class PPTReport:
 
         x, y, cx, cy = Inches(2), Inches(2), Inches(6), Inches(4.5)
         chart = slide.shapes.add_chart(
-            XL_CHART_TYPE.COLUMN_CLUSTERED, x, y, cx, cy, chart_data
+            self.chart_type(chart_type), x, y, cx, cy, chart_data
         ).chart
+
         plot = chart.plots[0]
         plot.has_data_labels = labels
 
         if legend:
             chart.has_legend = True
             chart.legend.position = XL_LEGEND_POSITION.RIGHT
-            chart.legend.include_in_layout = False
+            chart.series[0].smooth = True
 
-        if labels:
+        if labels and chart_type != "LINE":
             data_labels = plot.data_labels
             data_labels.position = XL_LABEL_POSITION.INSIDE_END
 
