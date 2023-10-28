@@ -1,7 +1,8 @@
 from pptx import Presentation
 from pptx.chart.data import CategoryChartData
-from pptx.enum.chart import XL_CHART_TYPE
-from pptx.enum.chart import XL_LABEL_POSITION
+from pptx.enum.chart import (
+    XL_CHART_TYPE, XL_LABEL_POSITION, XL_LEGEND_POSITION
+)
 from pptx.util import Inches
 from sample.samples import sample
 
@@ -44,14 +45,15 @@ class PPTReport:
                 bar_chart.get("title"),
                 bar_chart.get("data", []),
                 bar_chart.get("categories", []),
-                bar_chart.get("labels", False)
+                bar_chart.get("labels", False),
+                bar_chart.get("legend", False)
             )
 
         return slide
 
     def add_bar_chart(
         self, slide, chart_title="", data=[],
-        categories=[], labels=False
+        categories=[], labels=False, legend=False
     ):
         '''
             Adds a chart to the specific slide
@@ -81,6 +83,11 @@ class PPTReport:
         ).chart
         plot = chart.plots[0]
         plot.has_data_labels = labels
+
+        if legend:
+            chart.has_legend = True
+            chart.legend.position = XL_LEGEND_POSITION.RIGHT
+            chart.legend.include_in_layout = False
 
         if labels:
             data_labels = plot.data_labels
