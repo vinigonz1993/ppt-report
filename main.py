@@ -2,6 +2,7 @@ from pptx import Presentation
 from pptx.chart.data import CategoryChartData
 from pptx.enum.chart import XL_CHART_TYPE
 from pptx.util import Inches
+from sample import sample
 
 
 class PPTReport:
@@ -46,16 +47,29 @@ class PPTReport:
 
         return slide
 
-    def add_bar_chart(self, slide, chart_title, data, categories):
+    def add_bar_chart(self, slide, chart_title="", data=[], categories=[]):
         '''
             Adds a chart to the specific slide
         '''
+
+        if not data:
+            print(f"Categories are missing")
+            return
+
+        if not categories:
+            print(f"Categories are missing")
+            return
+
         chart_data = CategoryChartData()
+        chart_data.title = chart_title
         chart_data.categories = categories
-        chart_data.add_series(
-            chart_title,
-            data
-        )
+
+        for serie in data:
+            print(serie)
+            chart_data.add_series(
+                serie[0],
+                serie[1]
+            )
 
         x, y, cx, cy = Inches(2), Inches(2), Inches(6), Inches(4.5)
         slide.shapes.add_chart(
@@ -69,46 +83,7 @@ class PPTReport:
 
         self.presentation.save(f"{self.name}.pptx")
 
-title_props = {
-    "top": Inches(1),
-    "left": Inches(0.5),
-    "width": Inches(5)
-}
 
-slide_props = {
-    1: {
-        "title": {
-            "text": "Title 1",
-            **title_props
-        },
-        "text": {
-            "text": "Sample text 1"
-        }
-    },
-    2: {
-        "title": {
-            "text": "Second",
-            **title_props
-        },
-        "bar_chart": {
-            "title": "Sample Chart",
-            "data": [10, 20, 30, 35],
-            "categories": ["Apple", "Google", "Amazon", "Microsoft"]
-        }
-    },
-    3: {
-        "title": {
-            "text": "Second",
-            **title_props
-        },
-        "bar_chart": {
-            "title": "Sample Chart",
-            "data": [10, 20, 30, 35],
-            "categories": ["Apple", "Google", "Amazon", "Microsoft"]
-        }
-    }
-}
-
-report = PPTReport("report", slide_props)
+report = PPTReport("report", sample())
 
 report.mount()
