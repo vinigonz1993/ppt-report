@@ -42,7 +42,8 @@ def sample():
                     ["2022", [10, 20, 30, 35]],
                     ["2023", [13, 21, 31, 25]]
                 ],
-                "categories": ["Apple", "Google", "Amazon", "Microsoft"]
+                "categories": ["Apple", "Google", "Amazon", "Microsoft"],
+                "labels": True
             }
         },
     }
