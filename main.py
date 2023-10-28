@@ -1,10 +1,9 @@
 from pptx import Presentation
 from pptx.chart.data import CategoryChartData
 from pptx.enum.chart import XL_CHART_TYPE
-# from pptx.dml.color import RGBColor
 from pptx.enum.chart import XL_LABEL_POSITION
 from pptx.util import Inches
-from sample import sample
+from sample.samples import sample
 
 
 class PPTReport:
