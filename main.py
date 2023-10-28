@@ -1,6 +1,8 @@
 from pptx import Presentation
 from pptx.chart.data import CategoryChartData
 from pptx.enum.chart import XL_CHART_TYPE
+# from pptx.dml.color import RGBColor
+from pptx.enum.chart import XL_LABEL_POSITION
 from pptx.util import Inches
 from sample import sample
 
@@ -42,12 +44,16 @@ class PPTReport:
                 slide,
                 bar_chart.get("title"),
                 bar_chart.get("data", []),
-                bar_chart.get("categories", [])
+                bar_chart.get("categories", []),
+                bar_chart.get("labels", False)
             )
 
         return slide
 
-    def add_bar_chart(self, slide, chart_title="", data=[], categories=[]):
+    def add_bar_chart(
+        self, slide, chart_title="", data=[],
+        categories=[], labels=False
+    ):
         '''
             Adds a chart to the specific slide
         '''
@@ -65,16 +71,21 @@ class PPTReport:
         chart_data.categories = categories
 
         for serie in data:
-            print(serie)
             chart_data.add_series(
                 serie[0],
                 serie[1]
             )
 
         x, y, cx, cy = Inches(2), Inches(2), Inches(6), Inches(4.5)
-        slide.shapes.add_chart(
+        chart = slide.shapes.add_chart(
             XL_CHART_TYPE.COLUMN_CLUSTERED, x, y, cx, cy, chart_data
-        )
+        ).chart
+        plot = chart.plots[0]
+        plot.has_data_labels = labels
+
+        if labels:
+            data_labels = plot.data_labels
+            data_labels.position = XL_LABEL_POSITION.INSIDE_END
 
     def mount(self):
         '''Mounts the presentation'''
