@@ -20,7 +20,7 @@ def sample():
         },
         2: {
             "title": {
-                "text": "Second",
+                "text": "Simple bar chart",
                 **title_props
             },
             "bar_chart": {
@@ -33,7 +33,7 @@ def sample():
         },
         3: {
             "title": {
-                "text": "Third slide of the presentation",
+                "text": "Bar chart with labels",
                 **title_props
             },
             "bar_chart": {
@@ -44,6 +44,22 @@ def sample():
                 ],
                 "categories": ["Apple", "Google", "Amazon", "Microsoft"],
                 "labels": True
+            }
+        },
+        4: {
+            "title": {
+                "text": "Bar chart with labels and legend",
+                **title_props
+            },
+            "bar_chart": {
+                "title": "Sample Chart",
+                "data": [
+                    ["2022", [10, 20, 30, 35]],
+                    ["2023", [13, 21, 31, 25]]
+                ],
+                "categories": ["Apple", "Google", "Amazon", "Microsoft"],
+                "labels": True,
+                "legend": True
             }
         },
     }
