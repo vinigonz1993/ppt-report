@@ -1,5 +1,5 @@
 from pptx import Presentation
-from pptx.chart.data import CategoryChartData
+from pptx.chart.data import ChartData
 from pptx.enum.chart import (
     XL_CHART_TYPE, XL_LABEL_POSITION, XL_LEGEND_POSITION
 )
@@ -69,7 +69,8 @@ class PPTReport:
     def chart_type(self, chart_type):
         types = {
             "BAR": XL_CHART_TYPE.COLUMN_CLUSTERED,
-            "LINE": XL_CHART_TYPE.LINE
+            "LINE": XL_CHART_TYPE.LINE,
+            "PIE": XL_CHART_TYPE.PIE
         }
         return types[chart_type]
 
@@ -87,7 +88,7 @@ class PPTReport:
             "categories": categories
         })
 
-        chart_data = CategoryChartData()
+        chart_data = ChartData()
         chart_data.title = chart_title
         chart_data.categories = categories
 

@@ -79,4 +79,21 @@ def sample():
                 "chart_type": "LINE"
             }
         },
+        5: {
+            "title": {
+                "text": "Pie chart with labels and legend",
+                **title_props
+            },
+            "bar_chart": {
+                "title": "Sample Chart",
+                "data": [
+                    ["2022", [10, 20, 30, 35]],
+                    ["2023", [13, 21, 31, 25]]
+                ],
+                "categories": ["Apple", "Google", "Amazon", "Microsoft"],
+                "labels": True,
+                "legend": True,
+                "chart_type": "PIE"
+            }
+        },
     }
